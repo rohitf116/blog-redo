@@ -10,49 +10,60 @@
 <body>
   <h1>Node.js Blog App</h1>
 
-  <h2>Installation</h2>
-  <ol>
-    <li>Clone the repository:</li>
-    <code>git clone &lt;repository_url&gt;</code>
-    <li>Navigate to the project directory:</li>
-    <code>cd blog</code>
-    <li>Install the dependencies:</li>
-    <code>npm install</code>
-    <li>Set up environment variables:</li>
-    <ul>
-      <li>Create a <code>.env</code> file in the root directory.</li>
-      <li>Define the following environment variables in the <code>.env</code> file:</li>
-      <ul>
-        <li><code>MONGODB_URI</code>: The MongoDB connection URI.</li>
-        <li><code>JWT_SECRET</code>: The secret key used for JSON Web Token (JWT) authentication.</li>
-        <li>(Optional) <code>PORT</code>: The port number on which the server should run (default is 3000).</li>
-      </ul>
-    </ul>
-    <li>Start the application:</li>
-    <code>npm start</code>
-  </ol>
-
   <h2>Usage</h2>
+
   <h3>Users API</h3>
   <ul>
-    <li>POST /users/signup: Create a new user by signing up.</li>
-    <li>POST /users/signin: Sign in to the application.</li>
+    <li>
+      <strong>Sign Up</strong> - <code>POST /users/signup</code><br>
+      Creates a new user by signing up.
+    </li>
+    <li>
+      <strong>Sign In</strong> - <code>POST /users/signin</code><br>
+      Allows users to sign in to the application.
+    </li>
   </ul>
 
   <h3>Blogs API</h3>
   <ul>
-    <li>GET /blogs: Get all blogs.</li>
-    <li>GET /blogs/:id: Get a blog by ID.</li>
-    <li>POST /blogs: Create a new blog (requires authentication).</li>
-    <li>PATCH /blogs/:id: Update a blog by ID (requires authentication and ownership).</li>
-    <li>DELETE /blogs/:id: Delete a blog by ID (requires authentication and ownership).</li>
+    <li>
+      <strong>Get All Blogs</strong> - <code>GET /blogs</code><br>
+      Retrieves all blogs from the database.
+    </li>
+    <li>
+      <strong>Get Blog by ID</strong> - <code>GET /blogs/:id</code><br>
+      Retrieves a specific blog by its ID.
+    </li>
+    <li>
+      <strong>Create Blog</strong> - <code>POST /blogs</code><br>
+      Creates a new blog. Requires authentication using a valid JWT.
+    </li>
+    <li>
+      <strong>Update Blog</strong> - <code>PATCH /blogs/:id</code><br>
+      Updates a specific blog by its ID. Requires authentication and ownership of the blog.
+    </li>
+    <li>
+      <strong>Delete Blog</strong> - <code>DELETE /blogs/:id</code><br>
+      Deletes a specific blog by its ID. Requires authentication and ownership of the blog.
+    </li>
   </ul>
 
-  <p>Note: Authentication is done using JSON Web Tokens (JWT). When signing up or signing in, a token will be returned in
-    the response, which should be included in subsequent requests as a Bearer token in the Authorization header.</p>
+  <h3>Authentication and Authorization</h3>
+  <p>
+    Authentication is handled using JSON Web Tokens (JWT). When a user signs up or signs in, a token is generated and
+    returned in the response. This token should be included in the <code>x-api-key</code> header of subsequent requests as
+    a Bearer token for authentication.
+  </p>
+  <p>
+    Authorization is implemented to ensure that users can only perform certain actions on their own blogs. The
+    <code>blogGuard</code> middleware is used to check if the authenticated user owns the blog they are trying to update or
+    delete. If the ownership is not confirmed, a 403 Forbidden error is thrown.
+  </p>
 
   <h2>Folder Structure</h2>
-  <p>The project follows a typical folder structure for a Node.js Express application:</p>
+  <p>
+    The project follows a typical folder structure for a Node.js Express application:
+  </p>
   <ul>
     <li><code>src/controllers</code>: Contains the controllers for handling requests and responses.</li>
     <li><code>src/middlewares</code>: Includes custom middleware functions for authentication and request validation.</li>
@@ -65,24 +76,22 @@
   <h2>Dependencies</h2>
   <p>The application relies on the following dependencies:</p>
   <ul>
-    <li>bcrypt: ^5.1.0</li>
-    <li>dotenv: ^16.3.1</li>
-    <li>express: ^4.18.2</li>
-    <li>joi: ^17.9.2</li>
-    <li>jsonwebtoken: ^9.0.0</li>
-    <li>mongoose: ^7.3.1</li>
-    <li>morgan: ^1.10.0</li>
-    <li>nodemon: ^2.0.22</li>
+    <li><code>bcrypt</code>: Used for hashing passwords securely.</li>
+    <li><code>dotenv</code>: Used for loading environment variables from a <code>.env</code> file.</li>
+    <li><code>express</code>: The web framework for handling HTTP requests and responses.</li>
+    <li><code>jsonwebtoken</code>: Used for generating and verifying JSON Web Tokens (JWT).</li>
+    <li><code>mongoose</code>: An Object Data Modeling (ODM) library for MongoDB.</li>
+    <li><code>morgan</code>: Used for logging HTTP requests (optional in the provided package.json).</li>
+    <li><code>nodemon</code>: Used for automatically restarting the application during development (optional in the provided
+      package.json).</li>
   </ul>
 
   <p>These dependencies are automatically installed when running <code>npm install</code>.</p>
 
-  <h2>Contribution</h2>
-  <p>Contributions to this project are welcome. If you encounter any issues or have suggestions for improvement, please
-    open an issue or submit a pull request.</p>
-
   <h2>License</h2>
   <p>This project is licensed under the ISC license. See the <a href="LICENSE">LICENSE</a> file for more details.</p>
+
+  <p>Feel free to contribute to this project by opening issues or submitting pull requests.</p>
 </body>
 
 </html>
