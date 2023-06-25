@@ -6,16 +6,16 @@ const app = express();
 
 app.use(express.json());
 dotenv.config();
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
 import userRoutes from "./routes/users.routes.js";
+import blogRoutes from "./routes/blog.routes.js";
 app.use("/users", userRoutes);
+app.use("/blogs", blogRoutes);
 
 app.use(globalErrorHandler);
 app.listen(4000, () => {

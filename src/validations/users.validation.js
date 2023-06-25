@@ -1,11 +1,12 @@
 import usersModel, {
+  UserJoiLoginSchema,
   UserJoiSchema,
   UserJoiUpdateSchema,
 } from "../models/users.model.js";
 import { AppError } from "../utils/AppError.js";
 import { getError } from "../utils/error.js";
 
-const validator = (schema) => (payload) =>
+export const validator = (schema) => (payload) =>
   schema.validate(payload, { abortEarly: true, stripUnknown: true });
 
 export const validateSignUp = (payload) => {
@@ -20,6 +21,15 @@ export const validateSignUp = (payload) => {
 export const validateUpdateUser = (payload) => {
   const update = validator(UserJoiUpdateSchema);
   const { error, value } = update(payload);
+  if (error) {
+    throw new AppError(getError(error), 400);
+  }
+  return value;
+};
+
+export const validateUserLogin = (payload) => {
+  const login = validator(UserJoiLoginSchema);
+  const { error, value } = login(payload);
   if (error) {
     throw new AppError(getError(error), 400);
   }

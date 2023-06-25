@@ -1,9 +1,10 @@
 export const serializeUser = (user, message) => {
-  const { fname, lname, title, email } = user;
+  const { _id, fname, lname, title, email } = user;
   return {
     status: true,
     message: `User ${message} successful`,
     data: {
+      _id,
       fname,
       lname,
       title,
@@ -18,5 +19,10 @@ export const serializeUserRegistration = (user) => {
 };
 export const serializeUserUpdate = (user) => {
   const result = serializeUser(user, "update");
+  return result;
+};
+
+export const serializeUserFetch = (user) => {
+  const result = serializeUser(user, "Fetch");
   return result;
 };
